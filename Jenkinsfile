@@ -1,10 +1,10 @@
 pipeline{
-    agent any
-    stages{
-        stage("Initialize"){
-            agent {
+    agent {
                 docker { image "python:latest" }
             }
+    stages{
+        stage("Initialize"){
+            
             steps{
                 sh 'python -m venv venv'
                 sh 'ls'
@@ -13,10 +13,10 @@ pipeline{
         }
         stage("Test"){
             steps{
-                dir("${env.WORKSPACE}"){
-                    sh 'ls -l venv/bin'
-                    sh 'venv/bin/pytest'
-                }                
+                sh '''
+                    . venv/bin/activate
+                    pytest --junitxml=results.xml
+                '''
             }
         }
     }
