@@ -11,6 +11,14 @@ pipeline{
                 sh './venv/bin/pip3 install --upgrade --requirement requirements.txt'
             }
         }
+        stage("Test"){
+            agent {
+                docker { image "python:latest" }
+            }
+            steps{
+                sh 'pytest'
+            }
+        }
     }
 
 }
