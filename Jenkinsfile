@@ -12,11 +12,8 @@ pipeline{
             }
         }
         stage("Test"){
-            agent {
-                docker { image "python:latest" }
-            }
             steps{
-                sh 'pytest'
+                sh 'venv/bin/pytest'
             }
         }
     }
