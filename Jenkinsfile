@@ -13,7 +13,7 @@ pipeline{
         }
         stage("Test"){
             steps{
-                dir("${env.WORKSPACE}){
+                dir("${env.WORKSPACE}"){
                     sh 'venv/bin/pytest'
                 }                
             }
