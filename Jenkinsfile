@@ -8,8 +8,7 @@ pipeline{
             steps{
                 sh 'python -m venv venv'
                 sh 'ls'
-                sh 'source ./venv/bin/activate'
-                sh 'pip install -r requirements.text'
+                sh './venv/bin/pip3 install --upgrade --requirement requirements.txt'
             }
         }
     }
