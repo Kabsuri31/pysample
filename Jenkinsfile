@@ -19,6 +19,14 @@ pipeline{
                 '''
             }
         }
+        stage("Build Image"){
+            steps{
+                sh '''
+                    docker build -t pysample:1.0 .
+                    docker images
+                '''
+            }
+        }
     }
 
 }
