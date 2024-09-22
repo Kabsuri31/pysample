@@ -7,8 +7,8 @@ pipeline{
             }
             steps{
                 sh 'python -m venv venv'
-                sh 'pwd'
-                sh 'source venv/bin/activate'
+                sh 'ls pwd/'
+                sh 'source ./venv/bin/activate'
                 sh 'pip install -r requirements.text'
             }
         }
