@@ -14,7 +14,7 @@ pipeline{
         stage("Test"){
             steps{
                 dir("${env.WORKSPACE}"){
-                    sh 'ls -l'
+                    sh 'ls -l /venv/bin'
                     sh './venv/bin/pytest'
                 }                
             }
