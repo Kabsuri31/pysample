@@ -33,7 +33,7 @@ pipeline{
             }
             steps{
                 sh '''
-                    aquasec/trivy image pysample:1.0 
+                    trivy image pysample:1.0 
                 '''
             }
         }
