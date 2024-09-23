@@ -4,7 +4,7 @@ pipeline{
             }
     environment {
         SONAR_PROJECT_KEY = 'pysample'  
-        SONAR_HOST_URL = 'http://localhost:9000'  
+        SONAR_HOST_URL = 'http://127.0.0.1:9000'  
         SONAR_LOGIN = credentials('sonarqube-token-id') 
     }
     parameters {
