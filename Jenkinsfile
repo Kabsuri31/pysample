@@ -3,7 +3,6 @@ pipeline{
                 docker { image "python:latest" }
             }
     environment {
-        SONAR_PROJECT_KEY = 'pysample'  
         SONAR_HOST_URL = 'http://172.17.0.2:9000'  
         SONAR_LOGIN = credentials('sonarqube-token-id') 
     }
@@ -58,8 +57,6 @@ pipeline{
                     withSonarQubeEnv('SonarQubeScanner') {  
                         sh """
                         sonar-scanner \
-                          -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
-                          -Dsonar.sources=. \
                           -Dsonar.host.url=${SONAR_HOST_URL} \
                           -Dsonar.login=${SONAR_LOGIN}
                         """
