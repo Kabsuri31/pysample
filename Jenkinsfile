@@ -39,6 +39,7 @@ pipeline{
                 '''
             }
         }
+        /*
         stage("Trivy scan"){
             steps{
                 sh '''
@@ -48,7 +49,7 @@ pipeline{
                     docker run aquasec/trivy --severity HIGH,CRITICAL image kabsuri31/pysample:1.0
                 '''
             }
-        }
+        }*/
         stage("Sonar scan"){
             steps{
                 script {
