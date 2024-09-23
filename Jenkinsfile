@@ -34,18 +34,12 @@ pipeline{
             }
         }
         stage("Trivy scan"){
-            agent {
-                docker { 
-                    image "aquasec/trivy"
-                    args '-v /var/run/docker.sock:/var/run/docker.sock'
-                }
-            }
             steps{
                 sh '''
                     echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
                     docker pull kabsuri31/pysample:1.0 
                     docker images
-                    trivy image kabsuri31/pysample:1.0 
+                    docker run aquasec/trivy image kabsuri31/pysample:1.0
                 '''
             }
         }
