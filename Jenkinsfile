@@ -26,9 +26,9 @@ pipeline{
         stage("Build Image"){
             steps{
                 sh '''
-                    docker build -t pysample:1.0 .
+                    docker build -t kabsuri31/pysample:1.0 .
                     echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
-                    docker push kabsuri31/pysample
+                    docker push kabsuri31/pysample:1.0
                     docker images
                 '''
             }
@@ -40,9 +40,9 @@ pipeline{
             steps{
                 sh '''
                     echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
-                    docker pull kabsuri31/pysample
+                    docker pull kabsuri31/pysample:1.0 
                     docker images
-                    trivy image pysample:1.0 
+                    trivy image kabsuri31/pysample:1.0 
                 '''
             }
         }
