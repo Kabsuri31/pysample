@@ -50,6 +50,9 @@ pipeline{
             }
         }*/
         stage("Sonar scan"){
+            agent {
+                docker { image 'openjdk:11' }
+            }
             steps{
                 script {
                     withSonarQubeEnv('SonarQubeScanner') {  
