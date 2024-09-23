@@ -35,7 +35,7 @@ pipeline{
         }
         stage("Trivy scan"){
             agent {
-                docker { image "aquasec/trivy:latest" }
+                docker { image "aquasec/trivy" }
             }
             steps{
                 sh '''
