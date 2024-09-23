@@ -2,6 +2,10 @@ pipeline{
     agent {
                 docker { image "python:latest" }
             }
+    parameters {
+        string(name: 'DOCKER_USERNAME', defaultValue: '', description: 'Login docker')
+        password(name: 'DOCKER_PASSWORD', defaultValue: '', description: 'Docker password')
+    }
     stages{
         stage("Initialize"){
             
@@ -23,6 +27,8 @@ pipeline{
             steps{
                 sh '''
                     docker build -t pysample:1.0 .
+                    echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
+                    docker push kabsuri31/pysample
                     docker images
                 '''
             }
@@ -33,6 +39,8 @@ pipeline{
             }
             steps{
                 sh '''
+                    echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
+                    docker pull kabsuri31/pysample
                     docker images
                     trivy image pysample:1.0 
                 '''
