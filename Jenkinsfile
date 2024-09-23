@@ -33,6 +33,7 @@ pipeline{
             }
             steps{
                 sh '''
+                    docker images
                     trivy image pysample:1.0 
                 '''
             }
