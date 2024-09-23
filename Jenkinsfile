@@ -51,7 +51,7 @@ pipeline{
         }*/
         stage("Sonar scan"){
             agent {
-                docker { image 'openjdk:11' }
+                docker { image 'sonarsource/sonar-scanner-cli' }
             }
             steps{
                 script {
