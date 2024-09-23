@@ -39,7 +39,7 @@ pipeline{
                     echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
                     docker pull kabsuri31/pysample:1.0 
                     docker images
-                    docker run aquasec/trivy image kabsuri31/pysample:1.0
+                    docker run aquasec/trivy --severity HIGH,CRITICAL image kabsuri31/pysample:1.0
                 '''
             }
         }
