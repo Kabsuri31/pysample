@@ -33,7 +33,7 @@ pipeline{
                 sh '''
                     docker build -t kabsuri31/pysample:1.0 .
                     echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
-                    //docker push kabsuri31/pysample:1.0
+                    
                     docker images
                 '''
             }
