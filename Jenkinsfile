@@ -2,6 +2,12 @@ pipeline{
     agent {
                 docker { image "python:latest" }
             }
+    environment {
+        SONAR_SCANNER_HOME = tool name: 'SonarQube Scanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+        SONAR_PROJECT_KEY = 'pysample'  
+        SONAR_HOST_URL = 'http://localhost:9000'  
+        SONAR_LOGIN = credentials('sonarqube-token-id') 
+    }
     parameters {
         string(name: 'DOCKER_USERNAME', defaultValue: '', description: 'Login docker')
         password(name: 'DOCKER_PASSWORD', defaultValue: '', description: 'Docker password')
@@ -41,6 +47,18 @@ pipeline{
                     docker images
                     docker run aquasec/trivy --severity HIGH,CRITICAL image kabsuri31/pysample:1.0
                 '''
+            }
+        }
+        stage("Sonar scan"){
+            steps{
+                script {
+                    withSonarQubeEnv('SonarQube') {  
+                        sh "${SONAR_SCANNER_HOME}/bin/sonar-scanner " +
+                           "-Dsonar.projectKey=${SONAR_PROJECT_KEY} " +
+                           "-Dsonar.sources=. " +
+                           "-Dsonar.host.url=${SONAR_HOST_URL} " +
+                           "-Dsonar.login=${SONAR_LOGIN}"
+                    }
             }
         }
     }
