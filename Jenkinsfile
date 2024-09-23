@@ -3,7 +3,6 @@ pipeline{
                 docker { image "python:latest" }
             }
     environment {
-        SONAR_SCANNER_HOME = tool name: 'SonarQubeScanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
         SONAR_PROJECT_KEY = 'pysample'  
         SONAR_HOST_URL = 'http://localhost:9000'  
         SONAR_LOGIN = credentials('sonarqube-token-id') 
