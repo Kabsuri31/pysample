@@ -50,11 +50,18 @@ pipeline{
         stage("Run application"){
             steps{
                 script{
+                    def containerName = 'pysample'
+                    def isRunning = sh (
+                        script: "docker ps --filter 'name=${containerName}' --format '{{.Names}}'",
+                        returnStdout: true
+                    ).trim()
+                    if (isRunning != containerName) {
                     sh('''
-                        docker run -d --name pysample  kabsuri31/pysample:1.0
+                        docker run -d --name pysample -p 8090:5000  kabsuri31/pysample:1.0
                         docker ps -a
                         '''
                         )
+                    }
                     
                         def containerIp = sh (
                                 script: "docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' pysample",
