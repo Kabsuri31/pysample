@@ -3,7 +3,7 @@ pipeline{
                 docker { image "python:latest" }
             }
     environment {
-        SONAR_HOST_URL = 'http://172.17.0.2:9000'  
+        SONAR_HOST_URL = 'http://172.17.0.3:9000'  
         SONAR_LOGIN = credentials('sonarqube-token-id') 
     }
     parameters {
