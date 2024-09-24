@@ -30,7 +30,7 @@ class TestFlaskApp(unittest.TestCase):
     def test_home_page(self):
         driver = self.driver
         # Go to the Flask app home page
-        driver.get("http://127.0.0.1:5000/")
+        driver.get("http://localhost:5000/")
 
         # Check if the page contains the expected text
         print(driver.page_source)
@@ -38,7 +38,7 @@ class TestFlaskApp(unittest.TestCase):
 
     def test_post_json(self):
         # Send a POST request to the /echo endpoint
-        url = "http://127.0.0.1:5000/echo"
+        url = "http://localhost:5000/echo"
         json_data = {"message": "Hello from test!"}
 
         # Send POST request with JSON data

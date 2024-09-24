@@ -32,7 +32,6 @@ pipeline{
                 sh '''
                     docker build -t kabsuri31/pysample:1.0 .
                     echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
-                    
                     docker images
                 '''
             }
@@ -48,6 +47,23 @@ pipeline{
                 '''
             }
         }*/
+        stage("Run application"){
+            steps{
+                script{
+                    sh('''
+                    docker run -d --name pysample -p 5000:50000 kabsuri31/pysample:1.0
+                    docker ps -a
+                    '''
+                    )
+                }
+                def containerIp = sh (
+                        script: "docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' pysample",
+                        returnStdout: true
+                    ).trim()
+                env.CONTAINER_IP = containerIp
+                sh("echo ${env.CONTAINER_IP}")
+                }
+        }
         stage("Sonar scan"){
             agent {
                 docker { image 'sonarsource/sonar-scanner-cli' }
