@@ -64,7 +64,18 @@ pipeline{
             }
         }
     }
-         post {
+    stage("Load Testing -> Jmeter"){
+    agent {
+        docker {
+            image 'justb4/jmeter:5.5'
+            args '-v ./tests/:/tests/'
+        }
+    }
+        steps{
+             sh 'jmeter -n -t /tests/flask_test_plan.jmx -l /tests/results.jtl'
+        }
+    }
+    post {
         always {
             cleanWs()  // Clean workspace after the pipeline finishes
         }
