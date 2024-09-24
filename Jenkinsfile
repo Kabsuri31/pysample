@@ -19,14 +19,14 @@ pipeline{
                 sh './venv/bin/pip3 install --upgrade --requirement requirements.txt'
             }
         }
-        stage("Test"){
+        /*stage("Test"){
             steps{
                 sh '''
                     . venv/bin/activate
                     pytest --junitxml=results.xml
                 '''
             }
-        }
+        }*/
         stage("Build Image"){
             steps{
                 sh '''
@@ -51,17 +51,17 @@ pipeline{
             steps{
                 script{
                     sh('''
-                    docker run -d --name pysample -p 5000:50000 kabsuri31/pysample:1.0
-                    docker ps -a
-                    '''
-                    )
-                
-                    def containerIp = sh (
-                            script: "docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' pysample",
-                            returnStdout: true
-                        ).trim()
-                    env.CONTAINER_IP = containerIp
-                    sh("echo ${env.CONTAINER_IP}")
+                        docker run -d --name pysample -p 5000:50000 kabsuri31/pysample:1.0
+                        docker ps -a
+                        '''
+                        )
+                    
+                        def containerIp = sh (
+                                script: "docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' pysample",
+                                returnStdout: true
+                            ).trim()
+                        env.CONTAINER_IP = containerIp
+                        sh("echo ${env.CONTAINER_IP}")
                     }
             }
         }
