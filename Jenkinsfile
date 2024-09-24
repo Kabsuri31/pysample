@@ -89,11 +89,13 @@ pipeline{
         }
     }*/
     stage("Load Testing -> Jmeter"){
+        agent {
+                docker { image 'kabsuri31/jmeter:5.5' }
+            }
         steps{
             dir("${env.WORKSPACE}"){
                 sh '''
-                    ls -l ./tests
-                    docker run --rm -v ./tests:/tests justb4/jmeter:5.5 -n -t /tests/flask_test_plan.jmx -l /tests/result.jtl
+                    jmeter -n -t ./tests/flask_test_plan.jmx -l /tests/result.jtl
                 '''
             }
         }
