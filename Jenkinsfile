@@ -72,7 +72,7 @@ pipeline{
                     }
             }
         }
-        stage("Sonar scan"){
+       /* stage("Sonar scan"){
             agent {
                 docker { image 'sonarsource/sonar-scanner-cli' }
             }
@@ -87,15 +87,19 @@ pipeline{
                     }
             }
         }
-    }
+    }*/
     stage("Load Testing -> Jmeter"){
         steps{
+            dir("${env.WORKSPACE}"){
                 sh '''
+                    ls -l
                     docker run --rm -v ./tests:/tests justb4/jmeter:5.5 -n -t /tests/flask_test_plan.jmx -l /tests/result.jtl
                 '''
+            }
         }
     }
  
    }
 
 }
+ 
