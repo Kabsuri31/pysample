@@ -51,7 +51,7 @@ pipeline{
             steps{
                 script{
                     sh('''
-                        docker run -d --name pysample -p 5000:50000 kabsuri31/pysample:1.0
+                        docker run -d --name pysample  kabsuri31/pysample:1.0
                         docker ps -a
                         '''
                         )
