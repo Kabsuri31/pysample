@@ -55,14 +55,15 @@ pipeline{
                     docker ps -a
                     '''
                     )
-                }
-                def containerIp = sh (
-                        script: "docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' pysample",
-                        returnStdout: true
-                    ).trim()
-                env.CONTAINER_IP = containerIp
-                sh("echo ${env.CONTAINER_IP}")
-                }
+                
+                    def containerIp = sh (
+                            script: "docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' pysample",
+                            returnStdout: true
+                        ).trim()
+                    env.CONTAINER_IP = containerIp
+                    sh("echo ${env.CONTAINER_IP}")
+                    }
+            }
         }
         stage("Sonar scan"){
             agent {
