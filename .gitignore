@@ -23,6 +23,7 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+*dockerconfig.json
 
 # Virtual environments
 env/

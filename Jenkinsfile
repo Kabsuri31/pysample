@@ -5,6 +5,7 @@ pipeline{
     environment {
         SONAR_HOST_URL = 'http://172.17.0.3:9000'  
         SONAR_LOGIN = credentials('sonarqube-token-id') 
+        DOCKER_CRED_FILE = credentials('dockerhub-cred') 
     }
     parameters {
         string(name: 'DOCKER_USERNAME', defaultValue: '', description: 'Login docker')
@@ -27,6 +28,20 @@ pipeline{
                 '''
             }
         }*/
+        stage("Build Image Using Kaniko"){
+            agent {
+                docker { image "kabsuri31/kaniko-debug" }
+            }
+            steps{
+                dir("${env.WORKSPACE}"){
+                sh '''
+                    echo $DOCKER_CRED_FILE > /kaniko/.docker/config.json
+                    executor --context=. --dockerfile  Dockerfile --destination=kabsuri31/pysamplekaniko:1.0
+
+                '''
+                }
+            }
+        }
         stage("Build Image"){
             steps{
                 sh '''
