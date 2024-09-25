@@ -122,6 +122,7 @@ pipeline{
         steps{
             dir("${env.WORKSPACE}"){
                 sh '''
+                    ${env.CONTAINER_IP}
                     zap-baseline.py -t http://${env.CONTAINER_IP}:5000
 
                 '''
