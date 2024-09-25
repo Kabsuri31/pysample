@@ -35,7 +35,7 @@ pipeline{
             steps{
                 dir("${env.WORKSPACE}"){
                 sh '''
-                    echo $DOCKER_CRED_FILE > /kaniko/.docker/config.json
+                    cat $DOCKER_CRED_FILE > /kaniko/.docker/config.json
                     executor --context=. --dockerfile  Dockerfile --destination=kabsuri31/pysamplekaniko:1.0
 
                 '''
