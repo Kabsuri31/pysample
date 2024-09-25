@@ -35,7 +35,9 @@ pipeline{
             steps{
                 dir("${env.WORKSPACE}"){
                 sh '''
-                    echo $DOCKER_CRED_FILE > /kaniko/.docker/config.json
+
+                    cat $DOCKER_CRED_FILE > /kaniko/.docker/config.json
+                    sleep 12000
                     executor --context=. --dockerfile  Dockerfile --destination=kabsuri31/pysamplekaniko:1.0
 
                 '''
@@ -111,6 +113,19 @@ pipeline{
             dir("${env.WORKSPACE}"){
                 sh '''
                     jmeter -n -t ./tests/flask_test_plan.jmx -l /tests/result.jtl
+                '''
+            }
+        }
+    }
+    stage("OWASP ZAP SCANNER"){
+        agent {
+                docker { image 'zaproxy/zap-stable:2.15.0' }
+            }
+        steps{
+            dir("${env.WORKSPACE}"){
+                sh '''
+                    zap-baseline.py -t http://$env.CONTAINER_IP:5000
+
                 '''
             }
         }
